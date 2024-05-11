@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  node:
+    container_name: node_server
+    build:
+      context: .
+      dockerfile: Dockerfile # Path to your Node.js Dockerfile
+    ports:
+      - 3001:3001
+    environment:
+      - PORT=3001
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - 27017:27017 # Expose MongoDB port
+    volumes:
+      - ./database/data/db:/data/db # Volume to persist MongoDB data
