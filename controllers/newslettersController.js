@@ -28,7 +28,32 @@ if(!newletterResponse){
 
 })
 
-
+exports.findByFilters = catchAsync(async (req, res, next) => {
+      const { industry, source, subcategory } = req.query;
+      
+      const filters = {};
+      if (industry) filters.industry = industry;
+      if (source) filters.source = source;
+      if (subcategory) filters.subcategory = subcategory;
+      
+      const newsletters = await NewsLetter.find(filters);
+      
+      if (newsletters.length < 1) {
+            return res.json({
+                  status: "success",
+                  count: 0,
+                  msg: "No records found",
+                  data: []
+            });
+      }
+      
+      return res.json({
+            status: "success",
+            count: newsletters.length,
+            msg: "Fetched successfully",
+            data: newsletters
+      });
+});
 
 
 exports.getAll = catchAsync(async (req, res, next) => {
