@@ -12,6 +12,14 @@ const Newsletter = require('../models/newsletterModel');
 exports.subscribeTo = catchAsync(async (req, res, next) => {
 
 
+
+
+      const existingSubscription = await Subscription.findOne({ user: req.user._id });
+      if (existingSubscription) {
+            throw  new AppError('User already has a subscription to this newsletter', 400);
+      }
+
+
       const newsletterId = req.params.newsletterId;
       const newsletter = await Newsletter.findById(newsletterId);
 
