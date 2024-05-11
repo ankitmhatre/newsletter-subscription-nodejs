@@ -16,7 +16,7 @@ exports.subscribeTo = catchAsync(async (req, res, next) => {
 
       const existingSubscription = await Subscription.findOne({ user: req.user._id });
       if (existingSubscription) {
-            throw  new AppError('User already has a subscription to this newsletter', 400);
+            throw new AppError('User already has a subscription to this newsletter', 400);
       }
 
 
@@ -29,14 +29,14 @@ exports.subscribeTo = catchAsync(async (req, res, next) => {
 
       const subscription = await Subscription.create({
             user: req.user._id,
-            newsletter  : newsletterId
+            newsletter: newsletterId
       });
 
 
       const subscription2 = await Subscription.findById(subscription._id)
 
-       .populate('user') // Populate the author field
-      .populate('newsletter');
+            .populate('user') // Populate the author field
+            .populate('newsletter');
 
 
 
@@ -49,29 +49,46 @@ exports.subscribeTo = catchAsync(async (req, res, next) => {
             msg: "Subscribed successfully",
             data: subscription2
       });
- 
+
 });
 
 
 exports.getSubscription = catchAsync(async (req, res, next) => {
-
-
-      if(!req.user){
+      if (!req.user) {
             throw new AppError('User not found', 404);
       }
-      const subscription = await Subscription.findOne({ user: req.user._id });
+      const subscription = await Subscription.findOne({ user: req.user._id })
+            .populate('user') // Populate the author field
+            .populate('newsletter');
       if (!subscription) {
-            throw new AppError('Subscription not found', 404);
+            return res.status(200).json({
+                  status: 'success',
+             
+                        message: 'No subscription found',
+                
+            });
       }
-      res.status(200).json({
+     return  res.status(200).json({
             status: 'success',
-            data: {
+            data: 
                   subscription,
-            },
+            
       });
 });
 
 
 exports.deleteSubscription = catchAsync(async (req, res, next) => {
-      // Logic to delete subscription
+const subscriptionId = req.params.subscriptionId;
+const subscription = await Subscription.findByIdAndDelete(subscriptionId);
+
+
+
+if (!subscription) {
+      throw new AppError('Subscription not found', 404);
+}
+return res.status(201).json({
+      status: 'success',
+      msg: 'Subscription Deleted',
+      data: null,
 });
+})

@@ -32,7 +32,7 @@ module.exports = {
 
 
         if (token == null) {
-            return res.json({
+            return res.status(401).json({
                 error: "Unauthorized",
                 "msg" : "Pass token"
             }); // Unauthorized
@@ -42,7 +42,7 @@ module.exports = {
 
         var access_token = aes.decrypt(decodeURIComponent(token), `${process.env.TOKEN_SECRET_KEY}`);
     if(!access_token){
-        return res.json({
+        return res.status(401).json({
             error: "Unauthorized",
             "msg" : "Invalid token"
     })
@@ -67,7 +67,7 @@ module.exports = {
             req.user = foundUser;
             next();
         } catch (err) {
-            return res.json({
+            return res.status(403).json({
             error: "Forbidden",
             "msg" : "Invalid token",
             "err" : err
