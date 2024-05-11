@@ -63,32 +63,32 @@ exports.getSubscription = catchAsync(async (req, res, next) => {
       if (!subscription) {
             return res.status(200).json({
                   status: 'success',
-             
-                        message: 'No subscription found',
-                
+
+                  message: 'No subscription found',
+
             });
       }
-     return  res.status(200).json({
+      return res.status(200).json({
             status: 'success',
-            data: 
+            data:
                   subscription,
-            
+
       });
 });
 
 
 exports.deleteSubscription = catchAsync(async (req, res, next) => {
-const subscriptionId = req.params.subscriptionId;
-const subscription = await Subscription.findByIdAndDelete(subscriptionId);
+      const subscriptionId = req.params.subscriptionId;
+      const subscription = await Subscription.findByIdAndDelete(subscriptionId);
 
 
 
-if (!subscription) {
-      throw new AppError('Subscription not found', 404);
-}
-return res.status(201).json({
-      status: 'success',
-      msg: 'Subscription Deleted',
-      data: null,
-});
+      if (!subscription) {
+            throw new AppError('Subscription not found', 404);
+      }
+      return res.status(201).json({
+            status: 'success',
+            msg: 'Subscription Deleted',
+            data: null,
+      });
 })
