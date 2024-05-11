@@ -10,28 +10,7 @@ const auth = require('../modules/auth/auth');
 
 
 
-const sendToken = (user, statusCode, res) => {
 
-  var access_token = tokens.createAccessToken(user);
-  var refresh_token = tokens.createRefreshToken(user._id);
-  var enc_access_token = aes.encrypt(access_token, `${process.env.TOKEN_SECRET_KEY}`);
-  var enc_refresh_token = aes.encrypt(refresh_token, `${process.env.TOKEN_SECRET_KEY}`);
-
-  res.status(statusCode).json({
-      status: 'success',
-      data: {
-          access_token: encodeURIComponent(enc_access_token),
-          refresh_token: encodeURIComponent(enc_refresh_token),
-          user: {
-              id: user._id,
-              email: user.email,
-              first_name : user.first_name,
-              last_name : user.last_name,
-             
-          }
-      }
-  });
-}
 
 // Define the login controller
 exports.login = catchAsync(async (req, res, next) => {
@@ -41,7 +20,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (typeof user === "string")
       return next(new AppError(user, 400))
   else if (typeof user === "object")
-      sendToken(user, 200, res);
+     auth.sendToken(user, 200, res);
 })
 
 
@@ -69,7 +48,7 @@ await newUser.save();
 
 
  
-  sendToken(newUser, 201, res);
+  auth.sendToken(newUser, 201, res);
 });
 
 

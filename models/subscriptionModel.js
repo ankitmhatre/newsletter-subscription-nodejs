@@ -1,24 +1,32 @@
 const mongoose = require('mongoose');
-
-// subscriptionModel.js
-
+const userModel = require('./userModel');
+const NewsLetter = require('./newsletterModel');
+const User = require('./userModel');
 
 const subscriptionSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: false
     },
     price: {
         type: Number,
-        required: true
+        required: false
     },
     duration: {
         type: Number,
-        required: true
+        required: false
     },
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    newsletter: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: NewsLetter
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: User
     }
 });
 

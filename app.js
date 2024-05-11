@@ -5,8 +5,12 @@ const cors = require('cors');
 const { loginController , signupController} = require('./controllers/authController');
 const authRouter = require('./routes/authRouter');
 const newslettersRouter = require('./routes/newslettersRouter');
+const subscriptionRouter = require('./routes/subscriptionRoutes');
+
 const AppError = require('./utils/appError');
-const GlobalErrorController = require("./controllers/errorController")
+const GlobalErrorController = require("./controllers/errorController");
+const auth = require('./modules/auth/auth');
+const tokens = require('./modules/auth/tokens');
 
 const app = express();
 app.use(express.json()) // for parsing application/json
@@ -21,8 +25,10 @@ const limiter = rateLimit({
 
 app.use('/auth', authRouter);
 app.use('/newsletters', newslettersRouter);
+app.use('/subscription', auth.authenticateToken,  subscriptionRouter);
 // body parser i.e. reads data from the body into req.body
 app.use(express.json({ limit: '100kb' }));
+
 
 
 

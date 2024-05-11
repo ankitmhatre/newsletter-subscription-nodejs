@@ -33,14 +33,8 @@ subcategory:  {
     type: String,
 
 }
-,
 
-users: [ 
-    {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
-]
+
 
 
 });
