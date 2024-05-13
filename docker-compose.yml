@@ -10,6 +10,16 @@ services:
       - 3001:3001
     environment:
       - PORT=3001
+      - TOKEN_SECRET_KEY=does-not-matter
+      - JWT_ACCESS_EXPIRES_IN=9028374920
+      - JWT_REFRESH_EXPIRES_IN=9028374920873
+      - JWT_REFRESH_SECRET=lorem-ipsum
+      - JWT_ACCESS_SECRET=lorem-ipsum
+      - MONGO_HOST=localhost
+      - MONGO_PORT=27017
+      - MONGO_DBNAME=sdb
+      - NODE_ENV=development
+      - JWT_EMAIL_SECRET=akjkdsnajdnajnda
     depends_on:
       - mongo
 
