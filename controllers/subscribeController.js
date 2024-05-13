@@ -13,7 +13,7 @@ exports.subscribeTo = catchAsync(async (req, res, next) => {
 
 
 
-
+//Remove this snippet, to add more than one subscription
       const existingSubscription = await Subscription.findOne({ user: req.user._id });
       if (existingSubscription) {
             throw new AppError('User already has a subscription to this newsletter', 400);
@@ -78,6 +78,7 @@ exports.getSubscription = catchAsync(async (req, res, next) => {
 
 
 exports.deleteSubscription = catchAsync(async (req, res, next) => {
+      
       const subscriptionId = req.params.subscriptionId;
       const subscription = await Subscription.findByIdAndDelete(subscriptionId);
 

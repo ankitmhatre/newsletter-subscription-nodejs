@@ -16,19 +16,11 @@ const app = express();
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true }))
 
-const limiter = rateLimit({
-    max: 1000,
-    windowMs: 30 * 60 * 1000,
-    message: 'Too many requests, try again later.'
-});
 
 
 app.use('/auth', authRouter);
 app.use('/newsletters', newslettersRouter);
 app.use('/subscription', auth.authenticateToken,  subscriptionRouter);
-// body parser i.e. reads data from the body into req.body
-app.use(express.json({ limit: '100kb' }));
-
 
 
 
