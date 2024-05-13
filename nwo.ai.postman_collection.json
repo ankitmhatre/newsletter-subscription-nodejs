@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "c74f2dcc-7fd3-48bb-9fac-112de0c4a0ae",
+		"name": "nwo.ai",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25999706"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"nwo_access_token\", jsonData.data.access_token);",
+									"pm.environment.set(\"nwo_refresh_token\", jsonData.data.refresh_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ankitmhatre@hotmail.com\",\n    \"password\" : \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NWO_SERVER}}/auth/login",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ankitmhatre@hotmail.com\",\n    \"password\" : \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NWO_SERVER}}/auth/signup",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "newsletter",
+			"item": [
+				{
+					"name": "Get  All newsletter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NWO_SERVER}}/newsletters",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"newsletters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NWO_SERVER}}/newsletters/search?industry=&source=&subcategory",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"newsletters",
+								"search"
+							],
+							"query": [
+								{
+									"key": "industry",
+									"value": ""
+								},
+								{
+									"key": "source",
+									"value": ""
+								},
+								{
+									"key": "subcategory",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete news letter",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NWO_SERVER}}/newsletters/663eae9a08c07ede3e01e665",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"newsletters",
+								"663eae9a08c07ede3e01e665"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a newsletter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"title\": \"Testt name \",\n    \"content\": \"Artificial intelligence (AI) is transforming the healthcare industry...\",\n    \"created_at\": \"2024-05-10T08:00:00Z\",\n    \"industry\": \"Food\",\n    \"source\": \"TechCrunch\",\n    \"subcategory\": \"AI in Healthcare\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NWO_SERVER}}/newsletters/add",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"newsletters",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscribe",
+			"item": [
+				{
+					"name": "Create a subscription",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{nwo_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{NWO_SERVER}}/subscription/add/663eaf320814428b0b0df35e",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"subscription",
+								"add",
+								"663eaf320814428b0b0df35e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my subscription",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{NWO_SERVER}}/subscription",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"subscription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete subscription",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{nwo_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{NWO_SERVER}}/subscription/663ec359933344d2f04dc98a",
+							"host": [
+								"{{NWO_SERVER}}"
+							],
+							"path": [
+								"subscription",
+								"663ec359933344d2f04dc98a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
